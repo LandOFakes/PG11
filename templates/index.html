@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>To-Do List Application</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .flash-messages { list-style: none; padding: 0; margin-bottom: 15px; }
+        .flash-messages li { padding: 10px; margin-bottom: 10px; border: 1px solid transparent; border-radius: 4px; }
+        .flash-messages .error { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
+        .flash-messages .success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+        hr { margin-top: 20px; margin-bottom: 20px; }
+        form { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold;}
+        input[type=text], input[type=email], select { width: 300px; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type=submit] { padding: 10px 15px; background-color: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        input[type=submit]:hover { background-color: #4cae4c; }
+        input[value="Clear List"] { background-color: #d9534f; }
+        input[value="Clear List"]:hover { background-color: #c9302c; }
+    </style>
+</head>
+<body>
+
+    <h1>My To-Do List</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flash-messages>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li> {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    [cite: 10, 22]
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Email</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.task }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.priority }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No items yet! Add one below.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    [cite: 10, 26]
+    <h2>Add New Item</h2>
+    <form action="{{ url_for('submit') }}" method="post"> [cite: 27]
+        <div>
+            <label for="task">Task Description:</label>
+            <input type="text" id="task" name="task" required> [cite: 26]
+        </div>
+        <div>
+            <label for="email">Responsible Email:</label>
+            <input type="email" id="email" name="email" required> [cite: 26]
+        </div>
+        <div>
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority"> [cite: 26]
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Add To Do Item"> [cite: 26]
+        </div>
+    </form>
+
+    <hr>
+
+    [cite: 36]
+    <h2>Manage List</h2>
+    <form action="{{ url_for('clear') }}" method="post"> [cite: 36]
+        <input type="submit" value="Clear List"> [cite: 36]
+    </form>
+
+</body>
+</html>
